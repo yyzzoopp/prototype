@@ -5,6 +5,7 @@
  */
 (function(w) {
 
+    var extends = {};
     /**
      * sidebarNav
      * @param item            一级菜单item
@@ -105,13 +106,9 @@
             });
         }
     };
-
-    /*
-     * 继承
-     */
-    function extend(obj1, obj2) {
-        for (var i in obj2) {
-            obj1[i] = obj2[i];
-        }
+    extends.sidebarMenu = function(config){
+        return new VerticalMenu(config).init();
     }
+
+    $.extend(extends);
 })(window);

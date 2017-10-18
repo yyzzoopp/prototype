@@ -11,11 +11,9 @@ gulp.task('clean', function() {
 });
 
 gulp.task('scriptmin', function() {
-    return gulp.src('./src/script/**/*.js')
-        .pipe($.uglify({
-            mangle: true,
-            compress: true
-        }))
+    return gulp.src('./src/script/prototype.js')
+        // .pipe($.concat('prototype.js'))
+        .pipe($.uglify())
         .pipe($.rename({ suffix: '.min' }))
         .pipe(gulp.dest('./dist'))
 });
