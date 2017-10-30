@@ -5,7 +5,8 @@
  */
 (function(w) {
 
-    var extends = {};
+    var extendes = {};
+
     /**
      * sidebarNav
      * @param item            一级菜单item
@@ -15,14 +16,16 @@
      * @param el              容器
      * @param url             data请求url
      * @param tempUrl         模板请求url
-     * @param fn              二级菜单点击回调函数，传入当前元素
+     * @param click           二级菜单点击回调函数，传入当前元素
+     * @param complete        加载完成钩子
      */
     function VerticalMenu(config) {
         this.item = config.item;
         this.sunItem = config.sunItem;
         this.itemActive = config.itemActive || 'open';
         this.sunActive = config.sunActive || 'active';
-        this.fn = config.fn || function() {};
+        this.click = config.click || function() {};
+        this.complete = config.complete || function() {};
         this.el = config.el;
         this.url = config.url;
         this.tempUrl = config.tempUrl;
@@ -63,7 +66,6 @@
         sunHandler: function() {
             var aChildren = $(this.sunItem).children();
             var iActive = this.sunActive;
-            var fn = this.fn;
 
             aChildren.click(function() {
                 var _this = $(this);
@@ -76,7 +78,7 @@
                 });
 
                 _this.addClass(iActive);
-                fn(_this);
+                _this.click(_this);
             });
         },
         loadTemp: function() {
@@ -98,6 +100,7 @@
                                 if (xhr.status == 200) {
                                     var html = juicer(temp, data);
                                     $(_this.el).html(html);
+                                    _this.complete();
                                 }
                             }
                         });
@@ -106,7 +109,7 @@
             });
         }
     };
-    extends.sidebarMenu = function(config) {
+    extendes.sidebarMenu = function(config) {
         return new VerticalMenu(config).init();
     }
 
@@ -156,20 +159,20 @@
             return false;
         }
     }
-    extends.wheel = function(element, upFn, downFn) {
+    extendes.wheel = function(element, upFn, downFn) {
         return new Wheel({
             el: element,
             up: upFn,
             down: downFn
         }).init();
     }
-    extends.wheelUp = function(element, fn) {
+    extendes.wheelUp = function(element, fn) {
         return new Wheel({
             el: element,
             up: fn
         }).init();
     }
-    extends.wheelDown = function(element, fn) {
+    extendes.wheelDown = function(element, fn) {
         return new Wheel({
             el: element,
             down: fn
@@ -182,7 +185,9 @@
      * @param container   限制范围(选择容器的元素)
      * @param direction   限制方向 x y
      * @param limit       限制范围(document) true false(default)
-     * @param callback    回调函数:{scaleX,scaleY} 相对于父级拖拽比例
+     * @param down        按下钩子
+     * @param move        移动钩子:{scaleX,scaleY} 相对于父级拖拽比例
+     * @param up          抬起钩子
      */
 
     function Drag(config) {
@@ -190,7 +195,9 @@
         this.container = config.container;
         this.direction = config.direction;
         this.limit = config.limit || false;
-        this.callback = config.callback || function() {};
+        this.downFn = config.down || function() {};
+        this.moveFn = config.move || function() {};
+        this.upFn = config.up || function() {};
     }
 
     Drag.prototype = {
@@ -200,7 +207,7 @@
         drag: function(el, wrap, obj) {
             var _this = this;
 
-            el.mousedown(function(ev) {
+            el.off('mousedown').on('mousedown', function(ev) {
                 var ev = ev || event;
                 var iLeft = el.offset().left;
                 var iTop = el.offset().top;
@@ -223,6 +230,7 @@
                     obj.setCapture();
                 }
 
+                _this.downFn();
                 _this.move(el, wrap, obj, disX, disY);
                 _this.up(obj);
 
@@ -232,7 +240,7 @@
         move: function(el, wrap, obj, disX, disY) {
             var _this = this;
 
-            $(document).on('mousemove', function(ev) {
+            $(document).off('mousemove').on('mousemove', function(ev) {
                 var ev = ev || event;
                 var L = ev.clientX - disX;
                 var T = ev.clientY - disY;
@@ -269,25 +277,71 @@
 
                 if (_this.direction == 'x' || !_this.direction) el.css('left', L);
                 if (_this.direction == 'y' || !_this.direction) el.css('top', T);
-                _this.callback({
+                _this.moveFn({
                     scaleY: T / limitH,
                     scaleX: L / limitW
                 });
             });
         },
         up: function(obj) {
-            $(document).on('mouseup', function() {
+            var _this = this;
+
+            $(document).off('mouseup').on('mouseup', function() {
                 $(document).off('mousemove');
                 $(document).off('mouseup');
+                _this.upFn();
                 if (obj.releaseCapture) {
                     obj.releaseCapture();
                 }
             });
         }
     }
-    extends.drag = function(config){
+    extendes.drag = function(config) {
         return new Drag(config).init();
     };
 
-    $.extend(extends);
+    //TODO
+    /**
+     * 自定义滚动条
+     * @param  el          元素
+     */
+    function CustomScroll(config) {
+        this.el = config.el;
+    }
+
+    CustomScroll.prototype = {
+        init: function() {
+            this.createEl();
+            this.handlerDrag();
+        },
+        createEl: function() {
+            this.el.append('<div class="custom-scroll-drag"></div>');
+        },
+        handlerDrag: function() {
+            var _this = this;
+            var dragEl = this.el.children().eq(1);
+            var scrollEl = this.el.children().eq(0);
+            var disH = scrollEl.height() - this.el.height();
+
+            dragEl.css('height', parseInt(disH/this.el.height()*100) + "%");
+
+            $.drag({
+                el: dragEl,
+                container: this.el,
+                direction: "y",
+                down: function() {
+                    disH = scrollEl.height() - _this.el.height();
+                },
+                move: function(json) {
+                    scrollEl.css('top', disH * json.scaleY * -1);
+                }
+            });
+        }
+    }
+
+    extendes.customScroll = function(config) {
+        return new CustomScroll(config).init();
+    };
+
+    $.extend(extendes);
 })(window);
