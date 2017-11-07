@@ -1,0 +1,14 @@
+//==padding, margin
+//
+//------------------------------------
+
+.make-box(@class) {
+    .box(@index) when (@index =< @contentbox) {
+        @i: @index * 5;
+        .@{class}-@{i} {
+            @{class}: @index * 5px;
+        }
+        .box(@index+1);
+    }
+    .box(1)
+}

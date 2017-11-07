@@ -1,0 +1,69 @@
+//==grid mixins
+//
+//-------------------------------
+
+.make-row() {
+    .w-row {
+        position: relative;
+        &:extend(.clearfix all);
+    }
+}
+
+//.w-col-1......w-col-24
+.make-grid-columns() {
+    .col(@index) {
+        @item: ~".w-col-@{index}";
+        .col((@index + 1), @item);
+    }
+    .col(@index, @list) when (@index =< @grid-columns) {
+        @item: ~".w-col-@{index}";
+        .col((@index + 1), ~"@{list},@{item}");
+    }
+    .col(@index, @list) when (@index > @grid-columns) {
+        @{list} {
+            position: relative;
+            float: left;
+        }
+    }
+    .col(1)
+}
+
+.make-grid-columns-width() {
+    .col(@index) when (@index =< @grid-columns) {
+        .w-col-@{index} {
+            width: percentage(@index / @grid-columns);
+        }
+        .col(@index + 1);
+    }
+    .col(1)
+}
+
+.make-grid-columns-offset(){
+	.col(@index) when (@index =< @grid-columns) {
+        .w-col-offset-@{index} {
+            margin-left: percentage(@index / @grid-columns);
+        }
+        .col(@index + 1);
+    }
+    .col(1)
+}
+
+.make-grid-columns-push(){
+	.col(@index) when (@index =< @grid-columns) {
+        .w-col-push-@{index} {
+            right: percentage(@index / @grid-columns);
+        }
+        .col(@index + 1);
+    }
+    .col(1)
+}
+
+.make-grid-columns-pull(){
+	.col(@index) when (@index =< @grid-columns) {
+        .w-col-pull-@{index} {
+            left: percentage(@index / @grid-columns);
+        }
+        .col(@index + 1);
+    }
+    .col(1)
+}

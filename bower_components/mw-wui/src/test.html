@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div class="w-modal-mask"></div>
+    <div class="w-modal-wrap">
+        <div class="w-modal w-modal-confirm" style="width: 520px;">
+            <div class="w-modal-content">
+                <a href="javascript:;" class="w-modal-close a-gray-light">
+                    <i class="icon-remove"></i>
+                </a>
+                <div class="w-modal-header">
+                    <div class="w-modal-header-inner">普通的Modal对话框标题</div>
+                </div>
+                <div class="w-modal-body">
+                    <div class="w-modal-status text-primary">
+                        <i class="icon-ok-sign"></i>
+                    </div>
+                    <div class="w-modal-message">
+                        <p>123</p>
+                    </div>
+                </div>
+                <div class="w-modal-footer">
+                    <button type="button" class="w-btn w-btn-text w-btn-large"><span>取消</span></button>
+                    <button type="button" class="w-btn w-btn-primary w-btn-large"><span>确定</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <div style="width: 200px; height: 200px; position: relative; background-color: #000;">
+            <div class="w-mask-loading"></div>
+            <div class="w-loading">
+                <img src="data:image/gif;base64,R0lGODlhEgASAIABAKa4zP///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQJAwABACwAAAAAEgASAEACJwyOoYa3D6N8rVqgLp5M2+x9XcWBTTmGTqqa6qqxFInWUMzhk76TBQAh+QQJAwABACwAAAAAEgASAEACKQyOoYa3D6NUrdHqGJ44d3B9m1ZNZGZ+YXmKnsuq44qaNqSmnZ3rllIAACH5BAkDAAEALAAAAAASABIAQAIpDI6hhrcPo2zt0cRuvG5xoHxfyE2UZJWeKrLtmZ3aWqG2OaOjvfPwUgAAIfkECQMAAQAsAAAAABIAEgBAAigMjqGGtw8jbC3SxO67bnLFhQD4bZRkap4qli37qWSF1utZh7a+41ABACH5BAkDAAEALAAAAAASABIAQAIqDI6hhrcP42pNMgoUdpfanXVgJSaaZ53Yt6kj+a6lI7tcioN5m+o7KSkAACH5BAkDAAEALAAAAAASABIAQAIoDI6hhrcPI2tOKpom3vZyvVEeBgLdKHYhGjZsW63kMp/Sqn4WnrtnAQAh+QQJAwABACwAAAAAEgASAEACKAyOocvtCCN0TB5lM6Ar92hYmChxX2l6qRhqYAui8GTOm8rhlL6/ZgEAIfkECQMAAQAsAAAAABIAEgBAAigMjqHL7QgjdEyeJY2leHOdgZF4KdYJfGTynaq7XmGctuicwZy+j2oBACH5BAkDAAEALAAAAAASABIAQAInDI6hy+0II3RMHrosUFpjbmUROJFdiXmfmoafMZoodUpyLU5sO1MFACH5BAkDAAEALAAAAAASABIAQAImDI6hy+2GDozyKZrspBf7an1aFy2fuJ1Z6I2oho2yGqc0SYN1rRUAIfkECQMAAQAsAAAAABIAEgBAAiYMjqHL7W+QVLJaAOnVd+eeccliRaXZVSH4ee0Uxg+bevUJnuIRFAAh+QQJAwABACwAAAAAEgASAEACKoyBacvtnyI4EtH6QrV6X5l9UYgt2DZ1JRqqIOm1ZUszrIuOeM6x8x4oAAAh+QQJAwABACwAAAAAEgASAEACKIwNqcftryJAMrFqG55hX/wcnlN9UQeipZiGo9vCZ0hD6TbiN7hSZwEAIfkECQMAAQAsAAAAABIAEgBAAiiMH6CL7Z+WNHK2yg5WdLsNQB12VQgJjmZJiqnriZEl1y94423aqlwBACH5BAkDAAEALAAAAAASABIAQAIrjH+gi+2+IjCSvaoo1vUFPHnfxlllBp5mk4qt98KSSKvZCHZ4HtmTrgoUAAAh+QQFAwABACwAAAAAEgASAEACKIyPAcvpr5g0csJYc8P1cgtpwDceGblQmiey69W6oOfEon2f6KirUwEAIfkECQMAAQAsAAAPAAgAAwBAAgSMj6lXACH5BAkDAAEALAAAAAASABIAQAIYjI+JwK0Po5y02glUvrz7bzXiBpbLaD4FACH5BAkDAAEALAAAAAASABIAQAImjI8By8qfojQPTldzw/VymB3aCIidN6KaGl7kSnWpC6ftt00zDRUAIfkECQMAAQAsAAAAABIAEgBAAiaMjwHLyp+iNA9WcO6aVHOneWBYZeUXouJEiu1lWit7jhCX4rMEFwAh+QQJAwABACwAAAAAEgASAEACJ4yPAcvKn6I0r1pA78zWQX51XrWBSzl+Uxia7Jm+mEujW3trubg3BQAh+QQFAwABACwAAAAAEgASAEACJwyOoYa3D6N8rVqgLp5M2+x9XcWBTTmGTqqa6qqxFInWUMzhk76TBQA7">
+                <span class="w-loading-txt">加载中...</span>
+            </div>
+        </div>
+        <div class="w-message w-message-warning">
+            <span class="w-message-icon">
+                <i class="icon-ok"></i>
+            </span>
+            <div class="w-message-group">
+                <p>恭喜你，这是一条成功消息</p>
+            </div>
+            <span class="w-message-close">
+                <i class="icon-remove"></i>
+            </span>
+        </div>
+        <div class="w-alert w-alert-info w-alert-icon-wrap margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+            <a href="javascript:;" class="w-alert-close">
+                <i class="w-alert-close-icon icon-remove"></i>
+            </a>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-icon-wrap w-alert-info margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+            <a href="javascript:;" class="w-alert-close">
+                <i class="w-alert-close-icon icon-remove"></i>
+            </a>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-icon-wrap w-alert-info margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-icon-wrap w-alert-success margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-icon-wrap w-alert-warning margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-icon-wrap w-alert-danger margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-info w-alert-icon-wrap margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-success w-alert-icon-wrap margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-warning w-alert-icon-wrap margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-danger w-alert-icon-wrap margin-bottom-10">
+            <span class="w-alert-icon">
+                <i class="icon-exclamation-sign"></i>
+            </span>
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-info margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-success margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-warning margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-danger margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-info margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-success margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-warning margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+        <div class="w-alert w-alert-desc-wrap w-alert-danger margin-bottom-10">
+            <span class="w-alert-message">消息提示文案</span>
+            <span class="w-alert-desc">消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案消息提示文案</span>
+        </div>
+    </div>
+</body>
+</html>

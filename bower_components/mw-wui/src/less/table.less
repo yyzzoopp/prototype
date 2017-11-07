@@ -1,0 +1,88 @@
+//==表格
+//
+//------------------------------------
+.w-table-wrapper {
+    position: relative;
+    &.w-table-border {
+        border: 1px solid @color-border;
+        border-bottom: 0;
+        & td,
+        & th {
+            border-bottom: 1px solid @table-border;
+        }
+    }
+    &.w-table-skip {
+        & td,
+        & th {
+            border-right: 1px solid @table-border;
+        }
+    }
+    &.w-table-skip.w-table-border {
+        border-right: 0;
+    }
+    &.w-table-strip {
+        .w-table-body tr:nth-child(even) {
+            background-color: @table-cell-strip;
+        }
+    }
+    &.w-table-hover {
+        .w-table-body tr:hover {
+            background-color: @table-cell-hover !important;
+        }
+    }
+    &.w-table-text-center {
+        table tr th,
+        table tr td {
+            text-align: center;
+        }
+    }
+}
+
+.w-table {
+    width: inherit;
+    height: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    color: @color-content;
+    font-size: @font-size-base;
+    background-color: @color-white;
+    box-sizing: border-box;
+
+    & table {
+        width: 100%;
+        table-layout: fixed;
+    }
+    & .w-table-header {
+        overflow: hidden;
+        & th {
+            background-color: @table-header-color;
+        }
+    }
+    & .w-table-body {
+        font-size: @font-size-small;
+        overflow: auto;
+    }
+    & .w-table-tip td {
+        text-align: center;
+    }
+    & td,
+    & th {
+        min-width: 0;
+        min-height: @table-cell-height;
+        box-sizing: border-box;
+        text-align: left;
+        text-overflow: ellipsis;
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+    & .w-table-cell {
+        display: inline-block;
+        padding: @table-cell-padding;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: normal;
+        word-break: break-all;
+        box-sizing: border-box;
+        vertical-align: middle;
+    }
+}

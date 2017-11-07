@@ -1,0 +1,185 @@
+//==表单
+//
+//------------------------------------
+.w-form-control {
+    display: block;
+    width: 100%;
+    padding: @padding-base-vertical @padding-base-vertical;
+    font-size: @font-size-base;
+    line-height: @line-height-base;
+    color: @input-color;
+    background-color: @input-bg;
+    background-image: none;
+    border: 1px solid @input-border;
+    .transition(border-color);
+    .form-control-focus();
+    .placeholder();
+    .box-sizing(border-box);
+
+    &::-ms-expand {
+        border: 0;
+        background-color: transparent;
+    }
+
+    &[disabled],
+    &[readonly],
+    fieldset[disabled] & {
+        background-color: @input-bg-disabled;
+        opacity: 1;
+    }
+
+    &[disabled],
+    fieldset[disabled] & {
+        cursor: @cursor-disabled;
+    }
+
+    .form-disabled();
+
+    textarea& {
+        height: auto;
+    }
+}
+
+.w-form-checkbox,
+.w-form-radio {
+    position: relative;
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.w-form-radius {
+    .border-radius(@input-border-radius);
+}
+
+.w-form-radius-pill {
+    .border-radius(@border-radius-pill);
+}
+
+.w-form-xs {
+    .button-size(@padding-mini-vertical, @padding-base-vertical, @font-size-small, @line-height-base);
+}
+
+.w-form-sm {
+    .button-size(@padding-small-vertical, @padding-base-vertical, @font-size-small, @line-height-base);
+}
+
+.w-form-lg {
+    .button-size(@padding-large-vertical, @padding-base-vertical, @font-size-large, @line-height-base);
+}
+
+.form-focus-them(primary, @color-primary);
+.form-focus-them(success, @color-success);
+.form-focus-them(warning, @color-warning);
+.form-focus-them(danger, @color-danger);
+.form-focus-them(black, @color-black);
+.form-focus-them(gray-darker, @color-gray-darker);
+.form-focus-them(gray-dark, @color-gray-dark);
+.form-focus-them(gray, @color-gray);
+.form-focus-them(gray-light, @color-gray-light);
+
+.w-form-group {
+    margin-bottom: @input-group-mgb;
+}
+
+.w-has-feedback {
+    position: relative;
+}
+
+.w-form-feedback {
+    position: absolute;
+    top: 50%;
+    right: 1px;
+    z-index: 2;
+    display: block;
+    margin: -9px 0 0 0;
+    background-color: @color-white;
+    width: 34px;
+    text-align: center;
+    .transition(opacity);
+}
+
+.w-form-inline {
+    .w-form-checkbox,
+    .w-form-radio {
+        display: inline-block;
+        margin-top: 0;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+    .w-form-group {
+        display: inline-block;
+        margin-bottom: 0;
+        vertical-align: middle;
+    }
+    .w-form-control {
+        display: inline-block;
+        width: auto;
+        vertical-align: middle;
+    }
+}
+
+.w-form-horizontal {
+    position: relative;
+    .w-form-horizontal-input {
+        padding-left: @horizontal-label-width + 15px;
+    }
+    label {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        float: left;
+        width: @horizontal-label-width;
+        margin: -10px 0 0 0;
+        text-align: right;
+    }
+}
+
+//radio, checkbox
+//====================
+//
+.w-radio-wrapper,
+.w-checkbox-wrapper {
+    font-weight: normal;
+    & input {
+        display: none;
+    }
+}
+
+.w-radio {
+    .form-radio-checkbox("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAABBCAYAAADhRpVoAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3FpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowOWUxODE1Yy1hMzYyLTk3NDQtOWRmOC0zZGIxY2IyNGE3YmIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6ODlDRjdBNzRCMjE2MTFFNzg4MEFEQzk1QkY0RURDMkEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6ODlDRjdBNzNCMjE2MTFFNzg4MEFEQzk1QkY0RURDMkEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjA5ZTE4MTVjLWEzNjItOTc0NC05ZGY4LTNkYjFjYjI0YTdiYiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowOWUxODE1Yy1hMzYyLTk3NDQtOWRmOC0zZGIxY2IyNGE3YmIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7lha6ZAAAD7klEQVR42uRWS08TURQ+fU1La9soKC6EQiLoQt2w8BFdQXCjJgbcsJPE6IaE6IYfoQkaE2OM7nRD3GjcqRuNQgIbF4aoQQpsRF5t6WuGzni+O3c60/TBFFfGkxzm5p7zMfee83094zEMgyxLLq208eM2+yX2Xrk9z/6K/UGi88haORlA+GJyeYh9a3MrZaiqaui6LrxYVA3scSyFHCvfCdLz+YJRzxBDjgX28OIgv/hH+6GDsVAoSI2sUCjSr9XfaV72ePnPWDwe2xUEQw5yeTkO4JVwSwu5tUhY5F4C8Hgg4HcN9PtF7jEv7c1UAOc1bcc1QtsRuQsAvsrl866BuZzIfQPgw1QqnUapdzPkIJeXk16m0SovRrk/RiOw7CH4OSowDsoNs6cbUC7tpJynDskvo+SoHvs33In9vpPkFcBmbK993Duwgmun7qUaCvnLnXj1HRk0xI+nN88E44PHApTY7xP7PzdK9PabRo+ni+jfKINfln8BTt7dGmLXp5NaXSEjhhzkinbwQgj5ybVI7HSnn5Y2dZr8UKDppMnfMwk/jV8IUed+L80s7dCNqawQsq99cGLi1tng4NUTCi1u6DTyYpvmV0uklkj4Au+9/qpR/9EAnTgsjh+cXSntCCH39wTEf3/wsUCZYnVfsYcYbKA3YAu5+4BZCOt4tezTohnrMovWvJA13bCFjJJbhahn57rM2MqWbgv5/XdNbI6dD1E06KkCYQ8x2Dsz1xTyo8/FNErdfcBLz0f20QAXK6J4hGONPcSQg1wIuYIAM80QwEG5YX48Y8pFLzLlurjSWsmgJBMCx2PKZTh+3aJchR4dJK8p5Jok/8eE3MxELt+RQULILS2heFAJkNdn8rdUYqWoGvFgTcvfVLuqEjQVi+7z1JtcmC/pzDbecg3g8kRmUGy3cSfB9kTm48XczEjkILc8kRUl4LqaQcUhZJ8shBuTuc0LWXbBFDJK7tZ4gtlCRp/cWlF1CBnNdfMdgBxJBHsio7mNwA4CiInspJwQMvcpipKjeoiV+E6SckLIFZT7nyby3NxcQyH39fVV35FBQsitra3xaDRKiqKYX3uqSplMhtbX14WQGWxXVYKmOjo6POFwuM43XI6Wl5eFkAH2zM7OCiEzKAYQ3rC2tkbZbNb8sI1EqK2tTZxAgm0h8/HKoGQyKY4GMsOxxh5iyEFuWci4EwxvkuyvUgRiYnKZuaaQrUJYx6tlVkzm/qWQcX6rEHW//mVM0zRbyCgADNXzeqsPgT3ExBeImWsKGc1FqXH+RCIhCoBkONbYs9ohiTC5dwI4KCeEzH2KWpRDDHeSlBNCrqBcDZLXFLKT5H8EGAAFKyWNrjYcmgAAAABJRU5ErkJggg==");
+}
+
+.w-checkbox {
+    .form-radio-checkbox("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA4AAABSCAYAAABkBOVdAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3FpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDowOWUxODE1Yy1hMzYyLTk3NDQtOWRmOC0zZGIxY2IyNGE3YmIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6MDRDMzQ3NUNCMjU3MTFFNzg3NkNEMjMwNTM3MTQ3ODEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6MDRDMzQ3NUJCMjU3MTFFNzg3NkNEMjMwNTM3MTQ3ODEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOjFkMGE3YTgyLTUyYjQtNDg0ZS05ZDcwLTE2MDY5MmM0YzI2MyIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDowOWUxODE1Yy1hMzYyLTk3NDQtOWRmOC0zZGIxY2IyNGE3YmIiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz6tw4x4AAACIklEQVR42uyWMW/TQBTH/+ecayWOFaAksUFZsjBUMPQTwMbWBYSQYOErILEgJkZgRTCwsCAWJBbE1u8AYmCOVLuOUBqaNuRs97h3EaghMTkjBLT4LT5L7+f3993/7h1LkkSGYYwkTWESnFdwJmiDb4XbWD11Eq5bMwL39vZBhaw0zYwhCsoldRZ+MUrwmIC2zbWNTINyya9MCGXyaBtkPZOgQn67BSalPCKTw8PPB/LmixHikZnkVbUDn16pg118vCM/7Rer1qozWEUhClJn9I93LlVxrlkpNjn3L9dwY30Fz6658BxmBhK0sWbr8YPNL9idyMXgxtqKSq7OQffejvH6g5hdjm8DkkH/4jnA+lmOzgkrF5qpSDJuvRxBKMsug+akfuxnuPtmuj6v3otciIKdf7gzZ5nAYwh3ZXGvLoM0eLrGCjun6SrwyVVXD0yDCj2/7h2pjZymB3IrjNRhZdqRbdWRW9SRI3j1qjq9bCNQtX5QF7eokik0PR5tra7sVv87yDnXNjKNyUSgUlEdOUlSSd5LC1w7A79dbuS/t5HjOFbrNyk2OVEUYTAYoNfrIcsyM5Cg4XA4PfabTe2YhSAlUfKPkO/7aDQaizsyyej3+/o5Ho8hhMiFZiqSjE6nA8bYUmhOquM4CIJAjwnIg2akfr9EeB663e7StbXyFrncyOXV+l+b1cMv7243fpp84dHwN1c8/MXj1JH/+NX6qwADABe+Iho3a5FOAAAAAElFTkSuQmCC");
+}
+
+.w-radio,
+.w-checkbox {
+    margin-right: 5px;
+}
+
+.w-radio-wrapper,
+.w-checkbox-wrapper {
+    label {
+        position: static;
+        top: 0;
+        float: none;
+        width: auto;
+        margin: 0 8px 0 0;
+        text-align: left;
+    }
+    & input:checked+span {
+        background-position: 0 -17px;
+    }
+
+    & input[disabled]+span {
+        background-position: 0 -34px;
+        cursor: not-allowed;
+    }
+
+    & input:checked[disabled]+span {
+        background-position: 0 -51px;
+        cursor: not-allowed;
+    }
+}

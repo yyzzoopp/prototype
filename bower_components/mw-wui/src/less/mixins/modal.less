@@ -1,0 +1,21 @@
+//==modal
+//
+//-------------------------------
+.alert-type(@type, @color) {
+    .w-alert-@{type} {
+        border: 1px solid lighten(@color, 6%);
+        background-color: lighten(@color, 40%);
+
+        & .w-alert-icon {
+            color: @color;
+        }
+    }
+}
+
+.message-type(@type, @color) {
+    .w-message-@{type} {
+        .w-message-icon {
+            background-color: @color;
+        }
+    }
+}

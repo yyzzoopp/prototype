@@ -1,0 +1,94 @@
+//==按钮
+//
+//------------------------------------
+
+.w-btn {
+    display: inline-block;
+    margin-bottom: 0;
+    font-weight: @btn-font-weight;
+    text-align: center;
+    vertical-align: middle;
+    touch-action: manipulation;
+    cursor: pointer;
+    background-image: none;
+    background-color: @btn-default-bg;
+    border: 1px solid @btn-default-border;
+    white-space: nowrap;
+    color: @btn-default-color !important;
+    .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base;);
+    .user-select(none);
+    .transition(all);
+
+    &:hover,
+    &:focus,
+    &.focus {
+        border: 1px solid @btn-primary-border;
+        color: @btn-primary-bg !important;
+        text-decoration: none;
+    }
+
+    &:active,
+    &.active {
+        outline: 0;
+        background-image: none;
+    }
+
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        cursor: @cursor-disabled;
+        .opacity(.65);
+    }
+
+    .button-disabled();
+}
+
+.w-btn-xs {
+    .button-size(@padding-mini-vertical, @padding-mini-horizontal, @font-size-small, @line-height-base);
+}
+
+.w-btn-sm {
+    .button-size(@padding-small-vertical, @padding-small-horizontal, @font-size-small, @line-height-base);
+}
+
+.w-btn-lg {
+    .button-size(@padding-large-vertical, @padding-large-horizontal, @font-size-large, @line-height-base);
+}
+
+.w-btn-block{
+    display: block;
+    width: 100%;
+}
+
+.w-btn-radius {
+    .border-radius(@border-radius-default);
+}
+
+.w-btn-radius-pill {
+    .border-radius(@border-radius-pill);
+}
+
+.w-btn-radius-circle {
+    .border-radius(@border-radius-circle);
+}
+
+.make-is-them(success, @btn-success-border);
+.make-is-them(warning, @btn-warning-border);
+.make-is-them(danger, @btn-danger-border);
+.make-is-them(black, @btn-black-border);
+.make-is-them(gray-darker, @btn-gray-darker-border);
+.make-is-them(gray-dark, @btn-gray-dark-border);
+.make-is-them(gray, @btn-gray-border);
+.make-is-them(gray-light, @btn-gray-light-border);
+.make-is-them(gray-lighter, @btn-gray-lighter-border);
+
+.make-button-them(primary, @btn-primary-bg, @btn-primary-color, @btn-primary-border, lighten(@btn-primary-bg, 10%), @btn-primary-color, lighten(@btn-primary-border, 10%));
+.make-button-them(success, @btn-success-bg, @btn-success-color, @btn-success-border, lighten(@btn-success-bg, 10%), @btn-success-color, lighten(@btn-success-border, 10%));
+.make-button-them(warning, @btn-warning-bg, @btn-warning-color, @btn-warning-border, lighten(@btn-warning-bg, 10%), @btn-warning-color, lighten(@btn-warning-border, 10%));
+.make-button-them(danger, @btn-danger-bg, @btn-danger-color, @btn-danger-border, lighten(@btn-danger-bg, 10%), @btn-danger-color, lighten(@btn-danger-border, 10%));
+.make-button-them(black, @btn-black-bg, @btn-black-color, @btn-black-border, lighten(@btn-black-bg, 20%), @btn-black-color, lighten(@btn-black-border, 10%));
+.make-button-them(gray-darker, @btn-gray-darker-bg, @btn-gray-darker-color, @btn-gray-darker-border, lighten(@btn-gray-darker-bg, 10%), @btn-gray-darker-color, lighten(@btn-gray-darker-border, 10%));
+.make-button-them(gray-dark, @btn-gray-dark-bg, @btn-gray-dark-color, @btn-gray-dark-border, lighten(@btn-gray-dark-bg, 10%), @btn-gray-dark-color, lighten(@btn-gray-dark-border, 10%));
+.make-button-them(gray, @btn-gray-bg, @btn-gray-color, @btn-gray-border, lighten(@btn-gray-bg, 10%), @btn-gray-color, lighten(@btn-gray-border, 10%));
+.make-button-them(gray-light, @btn-gray-light-bg, @btn-gray-light-color, @btn-gray-light-border, lighten(@btn-gray-light-bg, 10%), @btn-gray-light-color, lighten(@btn-gray-light-border, 10%));
+.make-button-them(gray-lighter, @btn-gray-lighter-bg, @btn-gray-lighter-color, @btn-gray-lighter-border, darken(@btn-gray-lighter-bg, 10%), @btn-gray-lighter-color, darken(@btn-gray-lighter-border, 10%));
