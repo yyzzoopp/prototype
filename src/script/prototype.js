@@ -8,27 +8,237 @@
 
     /**
      * loading
+     * @param container   容器 (默认：body)
+     * @param text        显示的文字（默认：无）
      */
     function Load(config){
         var config = config || {};
 
-        this.container = config.container || $(document);
+        this.container = config.container || $("body");
         this.text = config.text || '';
     }
 
     Load.prototype = {
-        init : function(){
-            this.createEle();
-        },
         createEle : function(){
             var html = '<div class="w-modal-item"><div class="w-mask-loading"></div><div class="w-loading"><img src="data:image/gif;base64,R0lGODlhEgASAIABAKa4zP///yH/C05FVFNDQVBFMi4wAwEAAAAh+QQJAwABACwAAAAAEgASAEACJwyOoYa3D6N8rVqgLp5M2+x9XcWBTTmGTqqa6qqxFInWUMzhk76TBQAh+QQJAwABACwAAAAAEgASAEACKQyOoYa3D6NUrdHqGJ44d3B9m1ZNZGZ+YXmKnsuq44qaNqSmnZ3rllIAACH5BAkDAAEALAAAAAASABIAQAIpDI6hhrcPo2zt0cRuvG5xoHxfyE2UZJWeKrLtmZ3aWqG2OaOjvfPwUgAAIfkECQMAAQAsAAAAABIAEgBAAigMjqGGtw8jbC3SxO67bnLFhQD4bZRkap4qli37qWSF1utZh7a+41ABACH5BAkDAAEALAAAAAASABIAQAIqDI6hhrcP42pNMgoUdpfanXVgJSaaZ53Yt6kj+a6lI7tcioN5m+o7KSkAACH5BAkDAAEALAAAAAASABIAQAIoDI6hhrcPI2tOKpom3vZyvVEeBgLdKHYhGjZsW63kMp/Sqn4WnrtnAQAh+QQJAwABACwAAAAAEgASAEACKAyOocvtCCN0TB5lM6Ar92hYmChxX2l6qRhqYAui8GTOm8rhlL6/ZgEAIfkECQMAAQAsAAAAABIAEgBAAigMjqHL7QgjdEyeJY2leHOdgZF4KdYJfGTynaq7XmGctuicwZy+j2oBACH5BAkDAAEALAAAAAASABIAQAInDI6hy+0II3RMHrosUFpjbmUROJFdiXmfmoafMZoodUpyLU5sO1MFACH5BAkDAAEALAAAAAASABIAQAImDI6hy+2GDozyKZrspBf7an1aFy2fuJ1Z6I2oho2yGqc0SYN1rRUAIfkECQMAAQAsAAAAABIAEgBAAiYMjqHL7W+QVLJaAOnVd+eeccliRaXZVSH4ee0Uxg+bevUJnuIRFAAh+QQJAwABACwAAAAAEgASAEACKoyBacvtnyI4EtH6QrV6X5l9UYgt2DZ1JRqqIOm1ZUszrIuOeM6x8x4oAAAh+QQJAwABACwAAAAAEgASAEACKIwNqcftryJAMrFqG55hX/wcnlN9UQeipZiGo9vCZ0hD6TbiN7hSZwEAIfkECQMAAQAsAAAAABIAEgBAAiiMH6CL7Z+WNHK2yg5WdLsNQB12VQgJjmZJiqnriZEl1y94423aqlwBACH5BAkDAAEALAAAAAASABIAQAIrjH+gi+2+IjCSvaoo1vUFPHnfxlllBp5mk4qt98KSSKvZCHZ4HtmTrgoUAAAh+QQFAwABACwAAAAAEgASAEACKIyPAcvpr5g0csJYc8P1cgtpwDceGblQmiey69W6oOfEon2f6KirUwEAIfkECQMAAQAsAAAPAAgAAwBAAgSMj6lXACH5BAkDAAEALAAAAAASABIAQAIYjI+JwK0Po5y02glUvrz7bzXiBpbLaD4FACH5BAkDAAEALAAAAAASABIAQAImjI8By8qfojQPTldzw/VymB3aCIidN6KaGl7kSnWpC6ftt00zDRUAIfkECQMAAQAsAAAAABIAEgBAAiaMjwHLyp+iNA9WcO6aVHOneWBYZeUXouJEiu1lWit7jhCX4rMEFwAh+QQJAwABACwAAAAAEgASAEACJ4yPAcvKn6I0r1pA78zWQX51XrWBSzl+Uxia7Jm+mEujW3trubg3BQAh+QQFAwABACwAAAAAEgASAEACJwyOoYa3D6N8rVqgLp5M2+x9XcWBTTmGTqqa6qqxFInWUMzhk76TBQA7"><span class="w-loading-txt">' + this.text + '</span></div></div>';
 
-            this.container.append(html).fadeIn();
+            this.container.append(html);
+        },
+        show : function(){
+            this.createEle();
+            $(".w-modal-item").stop().animate({"opacity" : 1});
+        },
+        hide : function(){
+            $(".w-modal-item").stop().animate({"opacity" : 0}, function(){
+                $(this).remove();
+            });
         }
     };
 
     extendes.loading = function(config) {
-        return new Load(config).init();
+        return new Load(config);
+    };
+
+    /**
+     * notice
+     * @param type       显示的类型('info', 'success', 'warning', 'danger')
+     * @param text       显示的文字
+     * @param close      是否显示关闭按钮（默认：不显示）
+     * @param auto       是否自动关闭（默认：自动关闭）
+     * @param callback   关闭后的回调函数
+     */
+    function Notice(config){
+        this.type = 'w-message-' + config.type || 'w-message-info';
+        this.text = config.text || '';
+        this.close = config.close || false;
+        this.autoHide = config.auto === false ? false : true;
+        this.callback = config.callback ? config.callback : function(){};
+        this.top = '20px';
+        this.defTop = '-200px';
+    }
+
+    Notice.prototype = {
+        init : function(){
+            this.createEle();
+        },
+        createEle : function(){
+            var html = '<div class="w-message ' + this.type + '"><span class="w-message-icon"><i class="icon-ok"></i></span><div class="w-message-group"><p>' + this.text + '</p></div>' + (this.close ? '<span class="w-message-close"><i class="icon-remove"></i></span>' : '') + '</div>';
+            $("body").append(html);
+            this.show();
+        },
+        show : function(){
+            var _this = this;
+            var timer = null;
+
+            $('.w-message').stop().animate({"top":this.top});
+
+            if(this.close){
+                $('.w-message-close').click(function(){
+                    _this.hide();
+                });
+            }
+
+            if(this.autoHide){
+                timer = setTimeout(function(){
+                    _this.hide();
+                    clearTimeout(timer);
+                }, 2600);
+            }
+        },
+        hide : function(){
+            var _this = this;
+
+            $('.w-message').stop().animate({"top":this.defTop}, function(){
+                $(this).remove();
+                _this.callback();
+            });
+        }
+    };
+
+    extendes.notice = function(config) {
+        return new Notice(config).init();
+    };
+
+    /**
+     * modal
+     * @param width        自定义modal宽度（默认：520px）
+     * @param title        modal标题
+     * @param html         自定义html内容
+     * @param templateUrl  模板路径内容（ajax请求）
+     * @param type         modal类型（info, success, warning, danger）
+     * @param message      当modal为type类型，content为message
+     * @param buttons      自定义按钮
+     * @param cancelText   自定义取消按钮文字
+     * @param okText       自定义确定按钮文字
+     * @param cancel       modal关闭后，回调函数
+     * @param ok           modal确定后，回调函数
+     */
+
+    function Modal(config){
+        this.width = config.width || '520px';
+        this.title = config.title || '温馨提示';
+        this.html = config.html || '';
+        this.templateUrl = config.templateUrl || '';
+        this.message = config.message || '';
+        this.type = config.type || false;
+        this.buttons = config.buttons || false;
+        this.cancelText = config.cancelText || '取消';
+        this.okText = config.okText || '确定';
+        this.callbackIn = config.callbackIn || function(){};
+        this.cancel = config.cancel || function(){};
+        this.ok = config.ok || function(){};
+    }
+
+    Modal.prototype = {
+        createEle : function(){
+            var bodyHtml = '';
+            var buttonHtml = '';
+
+            if(this.type){
+                var type = '';
+
+                switch(this.type){
+                    case 'info' : 
+                        type = '<i class="icon-info-sign"></i>';
+                        break;
+                    case 'success' : 
+                        type = '<i class="icon-ok-sign"></i>';
+                        break;
+                    case 'warning' : 
+                        type = '<i class="icon-warning-sign"></i>';
+                        break;
+                    case 'danger' : 
+                        type = '<i class="icon-remove-sign"></i>';
+                        break;
+                }
+
+                bodyHtml = `
+                            <div class="w-modal-status text-primary">` + type + `</div>
+                            <div class="w-modal-message">
+                                <p>` + this.message + `</p>
+                            </div>
+                           `;
+
+            } else if(this.html){
+                bodyHtml = this.html;
+            } else if(this.templateUrl){
+                var _this = this;
+
+                $.ajax({
+                    async : false,
+                    type : 'POST',
+                    url : _this.templateUrl,
+                    dataType : 'html',
+                    success : function(data){
+                        bodyHtml = data;
+                    }
+                });
+            }
+
+            if(this.buttons){
+                buttonHtml = this.buttons;
+            } else {
+                buttonHtml = `
+                            <button type="button" class="w-btn w-btn-text w-btn-radius w-btn-large" data-type="modal-cancel"><span>` + this.cancelText + `</span></button>
+                            <button type="button" class="w-btn w-btn-primary w-btn-radius w-btn-large margin-left-10" data-type="modal-ok"><span>` + this.okText + `</span></button>
+                         `;
+            }
+            
+            var html = `
+                        <div class="w-modal-item">
+                            <div class="w-modal-mask"></div>
+                            <div class="w-modal-wrap">
+                                <div class="w-modal w-modal-confirm">
+                                    <div class="w-modal-content">
+                                        <a href="javascript:;" class="w-modal-close a-gray-light" data-type="modal-cancel">
+                                            <i class="icon-remove"></i>
+                                        </a>
+                                        <div class="w-modal-header">
+                                            <div class="w-modal-header-inner">` + this.title + `</div>
+                                        </div>
+                                        <div class="w-modal-body">` + bodyHtml + `</div>
+                                        <div class="w-modal-footer">` + buttonHtml + `</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                       `;
+
+            $("body").append(html);
+            $('.w-modal').css('width', this.width);
+        },
+        show : function(){
+            this.createEle();
+            this.callbackIn();
+            this.cancelFn();
+            this.okFn();
+            $(".w-modal-item").stop().animate({"opacity" : 1});
+        },
+        hide : function(){
+            $(".w-modal-item").stop().animate({"opacity" : 0}, function(){
+                $(this).remove();
+            });
+        },
+        cancelFn : function(){
+            var _this = this;
+
+            $('[data-type="modal-cancel"]').click(function(){
+                _this.hide();
+                _this.cancel();
+            });
+        },
+        okFn : function(){
+            var _this = this;
+
+            $('[data-type="modal-ok"]').click(function(){
+                _this.hide();
+                _this.ok();
+            });
+        }
+    };
+
+    extendes.modal = function(config) {
+        return new Modal(config);
     };
 
     /**

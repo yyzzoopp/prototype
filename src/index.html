@@ -4,16 +4,47 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="../bower_components/mw-wui/dist/css/wui.min.css">
+	<style type="text/css">
+		#box{
+			width: 200px;
+			height: 300px;
+			background-color: black;
+			position: relative;
+		}
+		.w-modal-item{
+			opacity: 0;
+		}
+		.w-message{
+			top: -200px;
+		}
+	</style>
 </head>
 <body>
-aasdfasdfasdfsadfsdfs
+12312312
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="./script/prototype.js"></script>
 <script>
 	$(function(){
-		$(document).click(function(){
-			$.loading();
+		var modal = $.modal({
+			html : '弹窗',
+			title : '标题1',
+			type : 'warning',
+			message : '警告',
+			ok : function(){
+				$.notice({
+					type : 'success',
+					text : '删除成功'
+				});
+			},
+			cancel : function(){
+				console.log('取消');
+			},
+			okText : 'ok',
+			cancelText : 'cancel',
+			buttons : '<button type="button" class="w-btn w-btn-danger w-btn-text w-btn-radius w-btn-block" data-type="modal-cancel"><span>删除</span></button>'
 		});
+
+		modal.show();
 	});
 </script>
 </body>
