@@ -7,8 +7,13 @@
     var extendes = {};
 
     /**
-     * table
-     * 
+     * table (juicer 模板引擎)
+     * @param container      表格容器
+     * @param data           表格数据（数组格式）
+     * @param key            表格字段名称
+     * @param class          表格样式（默认：w-table-strip w-table-hover）
+     * @param tbodyCustom    自定义表格内容
+     * @param callback       表格渲染后，回调函数
      */
     function Table(config) {
         this.container = config.container;
@@ -16,14 +21,15 @@
         this.data = config.data;
         this.key = config.key;
         this.class = config.class || 'w-table-strip w-table-hover';
-        this.tdCustom = config.tdCustom || '';
-        this.callback = config.callback || function(){};
+        this.tbodyCustom = config.tbodyCustom || '';
+        this.callback = config.callback || function() {};
     }
 
     Table.prototype = {
         show: function() {
             this.createThead();
             this.createTbody(this.data);
+            this.callback();
         },
         createThead: function() {
             var colHtml = '';
@@ -67,7 +73,7 @@
 
             if (data.length == 0) {
                 tbodyHtml = '<tr><td class="text-center" colspan="' + this.thead.length + '"><div class="w-table-cell">无数据</div></td></tr>';
-            } else {
+            } else if (this.tbodyCustom === '') {
                 for (var i = 0; i < data.length; i++) {
                     tdHtml = '';
 
@@ -75,15 +81,20 @@
                         tdHtml += '<td><div class="w-table-cell">' + data[i][this.key[j]] + '</div></td>';
                     }
 
-                    if(this.tdCustom !== ''){
-                        tdHtml += '<td><div class="w-table-cell">' + this.tdCustom + '</div></td>';
-                    }
-
                     tbodyHtml += '<tr>' + tdHtml + '</tr>';
                 }
+            } else {
+                var juicerData = {
+                    list: data
+                };
+
+                tbodyHtml = juicer(this.tbodyCustom, juicerData);
             }
 
             tbody.html(tbodyHtml);
+        },
+        refresh: function(data) {
+            this.createTbody(data);
         }
     };
 
