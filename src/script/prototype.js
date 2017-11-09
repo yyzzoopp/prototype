@@ -301,6 +301,7 @@
      */
     function Notice(config) {
         this.type = 'w-message-' + config.type || 'w-message-info';
+        this.types = config.type;
         this.text = config.text || '';
         this.close = config.close || false;
         this.autoHide = config.auto === false ? false : true;
@@ -316,7 +317,7 @@
         createEle: function() {
             var type = '';
 
-            switch (this.type) {
+            switch (this.types) {
                 case 'info':
                     type = '<i class="icon-info-sign"></i>';
                     break;
