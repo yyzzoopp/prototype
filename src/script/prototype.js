@@ -404,7 +404,7 @@
                         break;
                 }
 
-                bodyHtml = '<div class="w-modal-status text-primary">' + type + '</div>\
+                bodyHtml = '<div class="w-modal-status text-' + this.type + '">' + type + '</div>\
                             <div class="w-modal-message">\
                                 <p>' + this.message + '</p>\
                             </div>';
