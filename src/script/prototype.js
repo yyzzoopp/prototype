@@ -314,7 +314,24 @@
             this.createEle();
         },
         createEle: function() {
-            var html = '<div class="w-message ' + this.type + '"><span class="w-message-icon"><i class="icon-ok"></i></span><div class="w-message-group"><p>' + this.text + '</p></div>' + (this.close ? '<span class="w-message-close"><i class="icon-remove"></i></span>' : '') + '</div>';
+            var type = '';
+
+            switch (this.type) {
+                case 'info':
+                    type = '<i class="icon-info-sign"></i>';
+                    break;
+                case 'success':
+                    type = '<i class="icon-ok"></i>';
+                    break;
+                case 'warning':
+                    type = '<i class="icon-warning-sign"></i>';
+                    break;
+                case 'danger':
+                    type = '<i class="icon-remove"></i>';
+                    break;
+            }
+
+            var html = '<div class="w-message ' + this.type + '"><span class="w-message-icon">' + type + '</span><div class="w-message-group"><p>' + this.text + '</p></div>' + (this.close ? '<span class="w-message-close"><i class="icon-remove"></i></span>' : '') + '</div>';
             $("body").append(html);
             this.show();
         },
