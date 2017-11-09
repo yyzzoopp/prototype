@@ -564,6 +564,7 @@
         sunHandler: function() {
             var aChildren = $(this.sunItem).children();
             var iActive = this.sunActive;
+            var _this_ = this;
 
             aChildren.click(function() {
                 var _this = $(this);
@@ -576,7 +577,7 @@
                 });
 
                 _this.addClass(iActive);
-                _this.click(_this);
+                _this_.click(_this);
             });
         },
         loadTemp: function() {
