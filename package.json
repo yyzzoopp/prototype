@@ -4,7 +4,7 @@
   "description": "prototype.js",
   "main": "index.js",
   "scripts": {
-    "dist": "gulp dist"
+    "start": "gulp dist"
   },
   "repository": {
     "type": "git",

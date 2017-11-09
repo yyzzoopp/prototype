@@ -5,57 +5,25 @@
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="../bower_components/mw-wui/dist/css/wui.min.css">
-    <style type="text/css">
-    #box {
-        width: 200px;
-        height: 300px;
-        background-color: black;
-        position: relative;
-    }
-
-    .w-modal-item {
-        opacity: 0;
-    }
-
-    .w-message {
-        top: -200px;
-    }
-    </style>
+    <style type="text/css"></style>
 </head>
 
 <body>
+    <div id="page"></div>
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <script src="./script/juicer.js"></script>
+    <script src="../bower_components/juicer/juicer.js"></script>
     <script src="./script/prototype.js"></script>
     <script>
     $(function() {
-        var table = $.table({
-            container: $("body"),
-            thead: ['日期', '预付款账户总额', '交易账户总额', '创业账户总额', '服务费账户总额'],
-            key: ['time', 'num1', 'num2', 'num3', 'num4'],
-            data: [{
-                    time: '2017-10-19',
-                    num1: '-100',
-                    num2: '0',
-                    num3: '0',
-                    num4: '0'
-                },
-                {
-                    time: '2017-10-20',
-                    num1: '0',
-                    num2: '0',
-                    num3: '0',
-                    num4: '0'
-                }
-            ]
+        $.page({
+            container: $("#page"),
+            totalpage: 10,
+            showtotalpage : true,
+            showtopage : true,
+            callback: function(i) {
+                
+            }
         });
-
-        table.show();
-
-        $(document).click(function() {
-            table.refresh([]);
-        });
-
     });
     </script>
 </body>

@@ -13,5 +13,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "juicer": "^0.4.0",
+    "mw-wui": "^1.0.4"
+  }
 }

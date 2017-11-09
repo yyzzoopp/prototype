@@ -7,7 +7,165 @@
     var extendes = {};
 
     /**
-     * table (juicer 模板引擎)
+     * page
+     * @param container         容器
+     * @param totalpage         总页数
+     * @param curpage           当前页数（默认：1）
+     * @param showpage          显示几个页数（默认：7）
+     * @param showtotalpage     是否显示总页数（默认：不显示）
+     * @param showtopage        是否显示跳转到第几页（默认：不显示）
+     * @param callback          点击页数回调函数（返回当前点击页数）
+     */
+    function Page(config) {
+        this.container = config.container;
+        this.totalpage = parseInt(config.totalpage);
+        this.curpage = parseInt(config.curpage) || 1;
+        this.showpage = parseInt(config.showpage) || 7;
+        this.showtotalpage = config.showtotalpage || false;
+        this.showtopage = config.showtopage || false;
+        this.callback = config.callback || function() {};
+        this.TEMP_PAGE = '{@each page as item,index}\
+                            <ul class="w-page">\
+                                {@if item.showtotalpage == true}\
+                                <li class="w-page-total">共 ${item.totalpage} 页</li>\
+                                {@/if}\
+                                {@if item.curpage == 1}\
+                                <li title="上一页" class="w-page-prev w-page-disabled">\
+                                    <a><i class="icon-angle-left"></i></a>\
+                                </li>\
+                                {@else}\
+                                <li title="上一页" class="w-page-prev num" data-num="${item.curpage - 1}">\
+                                    <a><i class="icon-angle-left"></i></a>\
+                                </li>\
+                                {@/if}\
+                                <li class="w-page-item num" data-num="1">\
+                                    <a>1</a>\
+                                </li>\
+                                <li class="w-page-item num" data-num="2">\
+                                    <a>2</a>\
+                                </li>\
+                                {@if item.totalpage > item.showpage && item.curpage >= item.showpage - 1}\
+                                <li class="w-page-item-jump">...</li>\
+                                {@/if}\
+                                {@each item.num as items,index2}\
+                                <li class="w-page-item num" data-num="${items}">\
+                                    <a>${items}</a>\
+                                </li>\
+                                {@/each}\
+                                {@if item.curpage <= item.totalpage - Math.ceil( (item.showpage - 2) / 2 ) && item.totalpage > item.showpage}\
+                                <li class="w-page-item-jump">...</li>\
+                                {@/if}\
+                                {@if item.curpage == item.totalpage}\
+                                <li title="下一页" class="w-page-next w-page-disabled">\
+                                    <a><i class="icon-angle-right"></i></a>\
+                                </li>\
+                                {@else}\
+                                <li title="下一页" class="w-page-next num" data-num="${item.curpage + 1}">\
+                                    <a><i class="icon-angle-right"></i></a>\
+                                </li>\
+                                {@/if}\
+                                {@if item.showTopage == true}\
+                                <li class="w-page-options">\
+                                    <div class="w-page-options-elevator">跳至<input type="text" value="1" min="1" max="${item.totalpage}">页</div>\
+                                </li>\
+                                {@/if}\
+                            </ul>\
+                           {@/each}';
+    }
+
+    Page.prototype = {
+        init: function() {
+            this.createEl(this.curpage);
+        },
+        createEl: function(curpage) {
+            var html = '';
+            var array = [];
+
+            if (this.totalpage == 1 || this.totalpage == 0) { //总页数只有1页，不做渲染
+                return false;
+            }
+
+            if (this.totalpage <= this.showpage) { //总页数小于显示页数，页数全部显示
+                this.showpage = this.totalpage;
+                for (var i = 0; i <= this.totalpage; i++) {
+                    if (i > 2) {
+                        array.push(i);
+                    }
+                }
+            } else {
+                if (curpage < this.showpage - 1) {
+                    for (var j = 0; j <= this.showpage; j++) {
+                        if (j > 2) {
+                            array.push(j);
+                        }
+                    }
+                } else if (curpage >= this.showpage - 1) {
+                    if (curpage > this.totalpage - Math.ceil((this.showpage - 2) / 2)) {
+                        for (var k = 0; k < this.showpage - 2; k++) {
+                            array.unshift(this.totalpage - k);
+                        }
+                    } else {
+                        for (var h = 0; h < this.showpage - 2; h++) {
+                            array.push(curpage - 2 + h);
+                        }
+                    }
+                }
+            }
+
+            html = juicer(this.TEMP_PAGE, {
+                "page": [{
+                    "totalpage": this.totalpage,
+                    "curpage": curpage,
+                    "showpage": this.showpage,
+                    "showtotalpage": this.showtotalpage,
+                    "showTopage": this.showtopage,
+                    "num": array
+                }]
+            });
+
+            this.container.html(html);
+            this.handler(curpage);
+        },
+        handler: function(i) {
+            var _this = this;
+            var num = this.container.find('.num');
+            var cur = -1;
+
+            $.each(num, function(index, el) {
+                if ($(el).attr('data-num') == i) {
+                    $(this).addClass('w-page-item-active');
+                }
+            });
+
+            num.off('click').on('click', function() {
+                cur = $(this).attr('data-num');
+                if (cur === undefined) return false;
+                _this.createEl(cur);
+                _this.callback(cur);
+            });
+
+            if (this.showtopage) {
+                this.container.find('.w-page-options input').keyup(function(e) {
+                    if (e.which == 13) {
+                        var val = $(this).val();
+                        if (!isNaN(val) && val < _this.totalpage) {
+                            _this.createEl(val);
+                            _this.callback(val);
+                        } else {
+                            $(this).val(1);
+                        }
+                    }
+                });
+            }
+        }
+    };
+
+    extendes.page = function(config) {
+        return new Page(config).init();
+    };
+
+    /**
+     * table
      * @param container      表格容器
      * @param data           表格数据（数组格式）
      * @param key            表格字段名称
@@ -41,26 +199,24 @@
                 theadHtml += '<th><div class="w-table-cell">' + el + '</div></th>';
             });
 
-            var html = `
-                        <div class="w-table-wrapper ` + this.class + ` margin-top-30">
-                            <div class="w-table">
-                                <div class="w-table-header">
-                                    <table>
-                                        <colgroup>` + colHtml + `</colgroup>
-                                        <thead>
-                                            <tr>` + theadHtml + `</tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                                <div class="w-table-body">
-                                    <table>
-                                        <colgroup>` + colHtml + `</colgroup>
-                                        <tbody></tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                       `;
+            var html = '<div class="w-table-wrapper ' + this.class + ' margin-top-30">\
+                            <div class="w-table">\
+                                <div class="w-table-header">\
+                                    <table>\
+                                        <colgroup>' + colHtml + '</colgroup>\
+                                        <thead>\
+                                            <tr>' + theadHtml + '</tr>\
+                                        </thead>\
+                                    </table>\
+                                </div>\
+                                <div class="w-table-body">\
+                                    <table>\
+                                        <colgroup>' + colHtml + '</colgroup>\
+                                        <tbody></tbody>\
+                                    </table>\
+                                </div>\
+                            </div>\
+                        </div>';
 
             this.container.append(html);
         },
@@ -248,12 +404,10 @@
                         break;
                 }
 
-                bodyHtml = `
-                            <div class="w-modal-status text-primary">` + type + `</div>
-                            <div class="w-modal-message">
-                                <p>` + this.message + `</p>
-                            </div>
-                           `;
+                bodyHtml = '<div class="w-modal-status text-primary">' + type + '</div>\
+                            <div class="w-modal-message">\
+                                <p>' + this.message + '</p>\
+                            </div>';
 
             } else if (this.html) {
                 bodyHtml = this.html;
@@ -274,31 +428,27 @@
             if (this.buttons) {
                 buttonHtml = this.buttons;
             } else {
-                buttonHtml = `
-                            <button type="button" class="w-btn w-btn-text w-btn-radius w-btn-large" data-type="modal-cancel"><span>` + this.cancelText + `</span></button>
-                            <button type="button" class="w-btn w-btn-primary w-btn-radius w-btn-large margin-left-10" data-type="modal-ok"><span>` + this.okText + `</span></button>
-                         `;
+                buttonHtml = '<button type="button" class="w-btn w-btn-text w-btn-radius w-btn-large" data-type="modal-cancel"><span>' + this.cancelText + '</span></button>\
+                              <button type="button" class="w-btn w-btn-primary w-btn-radius w-btn-large margin-left-10" data-type="modal-ok"><span>' + this.okText + '</span></button>';
             }
 
-            var html = `
-                        <div class="w-modal-item">
-                            <div class="w-modal-mask"></div>
-                            <div class="w-modal-wrap">
-                                <div class="w-modal w-modal-confirm">
-                                    <div class="w-modal-content">
-                                        <a href="javascript:;" class="w-modal-close a-gray-light" data-type="modal-cancel">
-                                            <i class="icon-remove"></i>
-                                        </a>
-                                        <div class="w-modal-header">
-                                            <div class="w-modal-header-inner">` + this.title + `</div>
-                                        </div>
-                                        <div class="w-modal-body">` + bodyHtml + `</div>
-                                        <div class="w-modal-footer">` + buttonHtml + `</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                       `;
+            var html = '<div class="w-modal-item">\
+                            <div class="w-modal-mask"></div>\
+                            <div class="w-modal-wrap">\
+                                <div class="w-modal w-modal-confirm">\
+                                    <div class="w-modal-content">\
+                                        <a href="javascript:;" class="w-modal-close a-gray-light" data-type="modal-cancel">\
+                                            <i class="icon-remove"></i>\
+                                        </a>\
+                                        <div class="w-modal-header">\
+                                            <div class="w-modal-header-inner">' + this.title + '</div>\
+                                        </div>\
+                                        <div class="w-modal-body">' + bodyHtml + '</div>\
+                                        <div class="w-modal-footer">' + buttonHtml + '</div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>';
 
             $("body").append(html);
             $('.w-modal').css('width', this.width);
