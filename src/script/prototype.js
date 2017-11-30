@@ -29,41 +29,21 @@
                                 {@if item.showtotalpage == true}\
                                 <li class="w-page-total">共 ${item.totalpage} 页</li>\
                                 {@/if}\
-                                {@if item.curpage == 1}\
-                                <li title="上一页" class="w-page-prev w-page-disabled">\
+                                <li title="上一页" class="w-page-prev num{@if item.curpage == 1} w-page-disabled{@/if}"{@if item.curpage !== 1} data-num="${item.curpage - 1}"{@/if}>\
                                     <a><i class="icon-angle-left"></i></a>\
                                 </li>\
-                                {@else}\
-                                <li title="上一页" class="w-page-prev num" data-num="${item.curpage - 1}">\
-                                    <a><i class="icon-angle-left"></i></a>\
-                                </li>\
-                                {@/if}\
-                                <li class="w-page-item num" data-num="1">\
-                                    <a>1</a>\
-                                </li>\
-                                <li class="w-page-item num" data-num="2">\
-                                    <a>2</a>\
-                                </li>\
-                                {@if item.totalpage > item.showpage && item.curpage >= item.showpage - 1}\
-                                <li class="w-page-item-jump">...</li>\
-                                {@/if}\
                                 {@each item.num as items,index2}\
-                                <li class="w-page-item num" data-num="${items}">\
-                                    <a>${items}</a>\
-                                </li>\
+                                    {@if item.num[index2]===""}\
+                                    <li class="w-page-item-jump">...</li>\
+                                    {@else}\
+                                    <li class="w-page-item num" data-num="${items}">\
+                                        <a>${items}</a>\
+                                    </li>\
+                                    {@/if}\
                                 {@/each}\
-                                {@if item.curpage <= item.totalpage - Math.ceil( (item.showpage - 2) / 2 ) && item.totalpage > item.showpage}\
-                                <li class="w-page-item-jump">...</li>\
-                                {@/if}\
-                                {@if item.curpage == item.totalpage}\
-                                <li title="下一页" class="w-page-next w-page-disabled">\
+                                <li title="下一页" class="w-page-next num{@if item.curpage == item.totalpage} w-page-disabled{@/if}"{@if item.curpage !== item.totalpage} data-num="${item.curpage + 1}"{@/if}>\
                                     <a><i class="icon-angle-right"></i></a>\
                                 </li>\
-                                {@else}\
-                                <li title="下一页" class="w-page-next num" data-num="${item.curpage + 1}">\
-                                    <a><i class="icon-angle-right"></i></a>\
-                                </li>\
-                                {@/if}\
                                 {@if item.showTopage == true}\
                                 <li class="w-page-options">\
                                     <div class="w-page-options-elevator">跳至<input type="text" value="1" min="1" max="${item.totalpage}">页</div>\
@@ -80,46 +60,53 @@
         createEl: function(curpage) {
             var html = '';
             var array = [];
+            var cur = curpage;
 
             if (this.totalpage == 1 || this.totalpage == 0) { //总页数只有1页，不做渲染
                 return false;
-            }
-
-            if (this.totalpage <= this.showpage) { //总页数小于显示页数，页数全部显示
+            } else if (this.totalpage <= this.showpage) { //总页数小于显示页数，页数全部显示
                 this.showpage = this.totalpage;
-                for (var i = 0; i <= this.totalpage; i++) {
-                    if (i > 2) {
-                        array.push(i);
-                    }
+                for (var i = 0; i < this.totalpage; i++) {
+                    array.push(i + 1);
                 }
-            } else {
-                if (curpage < this.showpage - 1) {
-                    for (var j = 0; j <= this.showpage; j++) {
-                        if (j > 2) {
-                            array.push(j);
+            } else if (cur < this.showpage && this.totalpage > this.showpage) { //当前页小于显示页，且总页数大于显示页
+                for (var i = 0; i < this.showpage; i++) {
+                    array.push(i + 1);
+                }
+            } else if (cur >= this.showpage && this.totalpage > this.showpage && cur <= this.totalpage) { //当前页大于显示页，且总页数大于显示页
+                if (cur < this.totalpage - Math.floor((this.showpage - 2) / 2)) {
+                    for (var i = 0; i < this.showpage; i++) {
+                        if (i > 1) {
+                            array.push(cur + i - Math.ceil(this.showpage / 2));
+                        } else {
+                            array.push(i + 1);
                         }
                     }
-                } else if (curpage >= this.showpage - 1) {
-                    if (curpage > this.totalpage - Math.ceil((this.showpage - 2) / 2)) {
-                        for (var k = 0; k < this.showpage - 2; k++) {
-                            array.unshift(this.totalpage - k);
-                        }
-                    } else {
-                        for (var h = 0; h < this.showpage - 2; h++) {
-                            array.push(curpage - 2 + h);
+                    array.splice(2, 0, "");
+                    array.push("");
+                } else {
+                    for (var i = 0; i < this.showpage; i++) {
+                        if (i > 1) {
+                            if (cur > this.totalpage - Math.floor((this.showpage - 2) / 2)) {
+                                cur = this.totalpage - Math.floor((this.showpage - 2) / 2);
+                            }
+                            array.push(cur + i - Math.ceil(this.showpage / 2));
+                        } else {
+                            array.push(i + 1);
                         }
                     }
+                    array.splice(2, 0, "");
                 }
             }
 
             html = juicer(this.TEMP_PAGE, {
                 "page": [{
-                    "totalpage": this.totalpage,
-                    "curpage": curpage,
-                    "showpage": this.showpage,
-                    "showtotalpage": this.showtotalpage,
-                    "showTopage": this.showtopage,
-                    "num": array
+                    totalpage: this.totalpage,
+                    curpage: parseInt(curpage),
+                    showpage: this.showpage,
+                    showtotalpage: this.showtotalpage,
+                    showTopage: this.showtopage,
+                    num: array
                 }]
             });
 
@@ -140,14 +127,14 @@
             num.off('click').on('click', function() {
                 cur = $(this).attr('data-num');
                 if (cur === undefined) return false;
-                _this.createEl(cur);
-                _this.callback(cur);
+                _this.createEl(parseInt(cur));
+                _this.callback(parseInt(cur));
             });
 
             if (this.showtopage) {
                 this.container.find('.w-page-options input').keyup(function(e) {
                     if (e.which == 13) {
-                        var val = $(this).val();
+                        var val = parseInt($(this).val());
                         if (!isNaN(val) && val < _this.totalpage) {
                             _this.createEl(val);
                             _this.callback(val);
